@@ -1,0 +1,41 @@
+
+```{r}
+
+library(xts)
+library(quantmod)
+library(dplyr)
+library(readr)
+
+# Load the RDS file containing the data environment
+data.env <- readRDS("/home/clarice/Documents/VSCode/Term3/ML_Finance/MLF_HW1/R_code_for_data/WorldMarkts99_20.RDS")
+
+# List all objects (market data) stored in the environment
+market_names <- ls(data.env)
+
+# Initialize an empty data frame to store combined data
+combined_data <- data.frame()
+
+# Loop through each market, extract the data, and combine it
+for (market in market_names) {
+  # Extract market data from environment
+  market_data <- as.data.frame(as.xts(get(market, envir = data.env)))
+  
+  # Create a Date column from row names which are dates
+  market_data$Date <- rownames(market_data)
+  
+  # Add a Market column to identify data from different markets
+  market_data$Market <- market
+  
+  #rename for consistency
+  colnames(market_data) <- c('Open','High','Low','Close','Volume','Adjusted','Date','Market')
+  
+  # Combine with the main data frame
+  combined_data <- rbind(combined_data, market_data)
+
+}
+
+# Write the combined data frame to a pipe-delimited text file
+write_delim(combined_data, "/home/clarice/Documents/VSCode/Term3/ML_Finance/MLF_HW1/R_code_for_data/WorldMarkets99_20.txt", delim = "|")
+
+```
+
