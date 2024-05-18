@@ -48,6 +48,3 @@ Our Gaussian Process model showed the strongest performance, particularly in pre
 - Correlation Analysis
 - Log of Index and Returns Plot Comparison
 - Direction Scatter Plot Comparison
-
-## Acknowledgements
-We thank our instructor and classmates for their support and guidance throughout this project.
